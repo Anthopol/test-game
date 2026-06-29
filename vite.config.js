@@ -4,7 +4,10 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     rollupOptions: {
-      input: 'src/main.js',
+      input: {
+        main: 'src/main.js',
+        index: 'index.html'   // <-- add this line
+      },
       output: {
         entryFileNames: 'bundle.js',
         format: 'iife'
