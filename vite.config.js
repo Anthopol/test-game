@@ -10,7 +10,8 @@ export default defineConfig({
       },
       output: {
         entryFileNames: 'bundle.js',
-        format: 'iife'
+        format: 'iife',
+        codeSplitting: true
       }
     }
   },
