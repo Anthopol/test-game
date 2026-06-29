@@ -1,4 +1,4 @@
-name: Build and Deploy
+name: Build and Deploy Game (FTP)
 
 on:
   push:
@@ -14,7 +14,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '22'   # or '20' (both work)
+          node-version: '22'
 
       - name: Install dependencies
         run: npm install
@@ -22,13 +22,12 @@ jobs:
       - name: Build game
         run: npm run build
 
-      - name: Deploy via SCP
-        uses: appleboy/scp-action@v0.1.7
+      - name: FTP Deploy
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          passphrase: ${{ secrets.SSH_PASSPHRASE }}
-          source: dist/
-          target: ${{ secrets.DEPLOY_PATH }}/test-game/
-          strip_components: 1
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: dist/
+          server-dir: public/games/test-game/   # adjust to your Laravel public folder
+          dangerous-clean-slate: false
